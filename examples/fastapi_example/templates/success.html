@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ title }}</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.staticfile.org/bootstrap/5.1.3/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      h1 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #333;
+      }
+      .success-icon {
+        text-align: center;
+        font-size: 72px;
+        color: #4caf50;
+        margin: 20px 0;
+      }
+      .card {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+      .order-info {
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 15px;
+        margin-top: 20px;
+      }
+      .back-btn {
+        margin-top: 20px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>{{ title }}</h1>
+
+      <div class="card">
+        <div class="card-body">
+          <div class="success-icon">
+            <i class="bi bi-check-circle-fill"></i>✓
+          </div>
+
+          <div class="text-center">
+            <h3>支付成功！</h3>
+            <p>您的订单已经支付完成，感谢您的购买。</p>
+          </div>
+
+          <div class="order-info">
+            <h4>订单信息</h4>
+            <table class="table table-bordered">
+              <tbody>
+                {% for key, value in data.items() %}
+                <tr>
+                  <th>{{ key }}</th>
+                  <td>{{ value }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+          <div class="back-btn">
+            <a href="/" class="btn btn-primary">返回首页</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

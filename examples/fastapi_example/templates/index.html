@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ title }}</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.staticfile.org/bootstrap/5.1.3/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.staticfile.org/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary-color: #2563eb;
+        --secondary-color: #64748b;
+        --success-color: #10b981;
+        --warning-color: #f59e0b;
+        --danger-color: #ef4444;
+        --light-bg: #f8fafc;
+        --border-color: #e2e8f0;
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: var(--light-bg);
+        margin: 0;
+        padding: 0;
+      }
+
+      .navbar {
+        background: linear-gradient(135deg, var(--primary-color), #3b82f6);
+        box-shadow: var(--shadow);
+      }
+
+      .navbar-brand {
+        font-weight: 700;
+        font-size: 1.5rem;
+      }
+
+      .main-container {
+        display: flex;
+        min-height: calc(100vh - 76px);
+      }
+
+      .sidebar {
+        width: 280px;
+        background: white;
+        box-shadow: var(--shadow);
+        padding: 0;
+      }
+
+      .sidebar-nav {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .sidebar-nav li {
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .sidebar-nav a {
+        display: flex;
+        align-items: center;
+        padding: 1rem 1.5rem;
+        color: var(--secondary-color);
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .sidebar-nav a:hover,
+      .sidebar-nav a.active {
+        background-color: var(--primary-color);
+        color: white;
+      }
+
+      .sidebar-nav i {
+        margin-right: 0.75rem;
+        width: 20px;
+        text-align: center;
+      }
+
+      .content {
+        flex: 1;
+        padding: 2rem;
+      }
+
+      .page-section {
+        display: none;
+      }
+
+      .page-section.active {
+        display: block;
+      }
+
+      .card {
+        border: none;
+        box-shadow: var(--shadow);
+        border-radius: 12px;
+        margin-bottom: 2rem;
+      }
+
+      .card-header {
+        background: white;
+        border-bottom: 1px solid var(--border-color);
+        padding: 1.5rem;
+        border-radius: 12px 12px 0 0 !important;
+      }
+
+      .card-title {
+        margin: 0;
+        font-weight: 600;
+        color: #1e293b;
+      }
+
+      .payment-methods {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .payment-method {
+        border: 2px solid var(--border-color);
+        border-radius: 8px;
+        padding: 0.6rem 0.8rem;
+        cursor: pointer;
+        text-align: center;
+        transition: all 0.3s ease;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.875rem;
+        flex: 0 0 auto;
+        min-width: 100px;
+      }
+
+      .payment-method:hover {
+        border-color: var(--primary-color);
+        transform: translateY(-2px);
+      }
+
+      .payment-method.active {
+        border-color: var(--primary-color);
+        background: #eff6ff;
+        color: var(--primary-color);
+      }
+
+      .payment-method i {
+        font-size: 1.1rem;
+        margin-right: 0.4rem;
+        display: inline;
+      }
+
+      .payment-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .payment-tab {
+        flex: 0 0 auto;
+        padding: 0.5rem 0.75rem;
+        text-align: center;
+        cursor: pointer;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        color: var(--secondary-color);
+        background: #f8fafc;
+        border: 1px solid var(--border-color);
+        font-size: 0.875rem;
+        min-width: 80px;
+      }
+
+      .payment-tab.active {
+        background: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+        box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+        transform: translateY(-1px);
+      }
+
+      .payment-tab:hover:not(.active) {
+        background: #e2e8f0;
+        border-color: var(--primary-color);
+        transform: translateY(-1px);
+      }
+
+      .btn {
+        border-radius: 8px;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary {
+        background: var(--primary-color);
+        border-color: var(--primary-color);
+      }
+
+      .btn-primary:hover {
+        background: #1d4ed8;
+        border-color: #1d4ed8;
+        transform: translateY(-1px);
+      }
+
+      .btn-success {
+        background: var(--success-color);
+        border-color: var(--success-color);
+      }
+
+      .btn-warning {
+        background: var(--warning-color);
+        border-color: var(--warning-color);
+      }
+
+      .btn-danger {
+        background: var(--danger-color);
+        border-color: var(--danger-color);
+      }
+
+      .form-control {
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+        padding: 0.5rem;
+        transition: all 0.3s ease;
+      }
+
+      .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      }
+
+      .result-card {
+        margin-top: 1.5rem;
+        display: none;
+      }
+
+      .payment-qr {
+        text-align: center;
+        margin-top: 1.5rem;
+      }
+
+      .status-badge {
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        font-weight: 500;
+      }
+
+      .status-success {
+        background: #dcfce7;
+        color: #166534;
+      }
+
+      .status-pending {
+        background: #fef3c7;
+        color: #92400e;
+      }
+
+      .status-failed {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+
+      .status-cancelled {
+        background: #f3f4f6;
+        color: #6b7280;
+      }
+      .status-closed {
+        background: #f3f4f6;
+        color: #6b7280;
+      }
+
+      .status-danger {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+
+      .status-warning {
+        background: #fef3c7;
+        color: #92400e;
+      }
+
+      .status-secondary {
+        background: #f1f5f9;
+        color: #475569;
+      }
+
+      .order-table {
+        background: white;
+        border-radius: 8px;
+      }
+
+      .table th {
+        border-top: none;
+        font-weight: 600;
+        color: #374151;
+        background: #f9fafb;
+      }
+
+      .loading {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid var(--primary-color);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .main-container {
+          flex-direction: column;
+        }
+
+        .sidebar {
+          width: 100%;
+        }
+
+        .sidebar-nav {
+          display: flex;
+          overflow-x: auto;
+        }
+
+        .sidebar-nav li {
+          border-bottom: none;
+          border-right: 1px solid var(--border-color);
+          min-width: 120px;
+        }
+
+        .content {
+          padding: 1rem;
+        }
+
+        .payment-methods {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <i class="fas fa-credit-card me-2"></i>
+          SenWeaver Pay 支付演示
+        </a>
+      </div>
+    </nav>
+
+    <!-- 主容器 -->
+    <div class="main-container">
+      <!-- 侧边栏 -->
+      <div class="sidebar">
+        <ul class="sidebar-nav">
+          <li>
+            <a href="#" class="nav-link active" data-section="payment">
+              <i class="fas fa-plus-circle"></i>
+              创建支付
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link" data-section="query">
+              <i class="fas fa-search"></i>
+              查询订单
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link" data-section="refund">
+              <i class="fas fa-undo"></i>
+              申请退款
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link" data-section="cancel">
+              <i class="fas fa-times-circle"></i>
+              取消订单
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link" data-section="close">
+              <i class="fas fa-ban"></i>
+              关闭订单
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link" data-section="orders">
+              <i class="fas fa-list"></i>
+              订单列表
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 主内容区 -->
+      <div class="content">
+        <!-- 创建支付页面 -->
+        <div class="page-section active" id="payment">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">
+                <i class="fas fa-plus-circle me-2"></i>
+                创建支付订单
+              </h4>
+            </div>
+            <div class="card-body">
+              <form id="paymentForm">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="mb-3">
+                      <label for="out_trade_no" class="form-label"
+                        >订单号</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="out_trade_no"
+                        name="out_trade_no"
+                        value="{{ order_id }}"
+                        required
+                      />
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="amount" class="form-label">金额 (元)</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="amount"
+                        name="amount"
+                        value="0.01"
+                        min="0.01"
+                        step="0.01"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="mb-3">
+                      <label for="subject" class="form-label">商品名称</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="subject"
+                        name="subject"
+                        value="测试商品"
+                        required
+                      />
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="body" class="form-label">商品描述</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="body"
+                        name="body"
+                        value="这是一个测试商品"
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label">支付网关</label>
+                  <div class="payment-methods">
+                    <div class="payment-method active" data-gateway="alipay">
+                      <i class="fab fa-alipay"></i>
+                      <input
+                        type="radio"
+                        name="channel"
+                        value="alipay"
+                        checked
+                        style="display: none"
+                      />
+                      支付宝
+                    </div>
+                    <div class="payment-method" data-gateway="wechat">
+                      <i class="fab fa-weixin"></i>
+                      <input
+                        type="radio"
+                        name="channel"
+                        value="wechat"
+                        style="display: none"
+                      />
+                      微信支付
+                    </div>
+                    <div class="payment-method" data-gateway="unipay">
+                      <i class="fas fa-credit-card"></i>
+                      <input
+                        type="radio"
+                        name="channel"
+                        value="unipay"
+                        style="display: none"
+                      />
+                      银联支付
+                    </div>
+                    <div class="payment-method" data-gateway="douyin">
+                      <i class="fab fa-tiktok"></i>
+                      <input
+                        type="radio"
+                        name="channel"
+                        value="douyin"
+                        style="display: none"
+                      />
+                      抖音支付
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label">支付方式</label>
+                  <div class="payment-tabs">
+                    <div class="payment-tab active" data-tab="web">
+                      <i class="fas fa-desktop me-1"></i>电脑网页
+                    </div>
+                    <div class="payment-tab" data-tab="h5">
+                      <i class="fas fa-mobile-alt me-1"></i>手机网页
+                    </div>
+                    <div class="payment-tab" data-tab="scan">
+                      <i class="fas fa-qrcode me-1"></i>扫码支付
+                    </div>
+                    <div class="payment-tab" data-tab="app">
+                      <i class="fas fa-mobile me-1"></i>APP支付
+                    </div>
+                    <div class="payment-tab" data-tab="mini">
+                      <i class="fas fa-cube me-1"></i>小程序
+                    </div>
+                  </div>
+                  <input type="hidden" id="method" name="method" value="web" />
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-credit-card me-2"></i>
+                  创建订单并支付
+                </button>
+              </form>
+
+              <!-- 支付结果 -->
+              <div class="card result-card" id="result">
+                <div class="card-header">
+                  <h5 class="card-title">
+                    <i class="fas fa-receipt me-2"></i>
+                    支付结果
+                  </h5>
+                </div>
+                <div class="card-body">
+                  <div id="resultContent"></div>
+                  <div class="payment-qr" id="qrCode"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 查询订单页面 -->
+        <div class="page-section" id="query">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">
+                <i class="fas fa-search me-2"></i>
+                查询订单
+              </h4>
+            </div>
+            <div class="card-body">
+              <form id="queryForm">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <label for="query_gateway" class="form-label"
+                        >支付网关</label
+                      >
+                      <select
+                        class="form-control"
+                        id="query_gateway"
+                        name="channel"
+                        required
+                      >
+                        <option value="alipay">支付宝</option>
+                        <option value="wechat">微信支付</option>
+                        <option value="unipay">银联支付</option>
+                        <option value="douyin">抖音支付</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="mb-3">
+                      <label for="query_order_id" class="form-label"
+                        >订单号</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="query_order_id"
+                        name="order_id"
+                        placeholder="请输入订单号"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="mb-3">
+                      <label class="form-label">&nbsp;</label>
+                      <button
+                        type="submit"
+                        class="btn btn-success d-block w-100"
+                      >
+                        <i class="fas fa-search me-2"></i>
+                        查询
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+
+              <!-- 查询结果 -->
+              <div class="card result-card" id="queryResult">
+                <div class="card-header">
+                  <h5 class="card-title">
+                    <i class="fas fa-info-circle me-2"></i>
+                    查询结果
+                  </h5>
+                </div>
+                <div class="card-body">
+                  <div id="queryContent"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 申请退款页面 -->
+        <div class="page-section" id="refund">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">
+                <i class="fas fa-undo me-2"></i>
+                申请退款
+              </h4>
+            </div>
+            <div class="card-body">
+              <form id="refundForm">
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="refund_gateway" class="form-label"
+                        >支付网关</label
+                      >
+                      <select
+                        class="form-control"
+                        id="refund_gateway"
+                        name="channel"
+                        required
+                      >
+                        <option value="alipay">支付宝</option>
+                        <option value="wechat">微信支付</option>
+                        <option value="unipay">银联支付</option>
+                        <option value="douyin">抖音支付</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="refund_order_id" class="form-label"
+                        >订单号</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="refund_order_id"
+                        name="order_id"
+                        placeholder="请输入订单号"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="refund_amount" class="form-label"
+                        >退款金额</label
+                      >
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="refund_amount"
+                        name="amount"
+                        placeholder="退款金额"
+                        min="0.01"
+                        step="0.01"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label class="form-label">&nbsp;</label>
+                      <button
+                        type="submit"
+                        class="btn btn-warning d-block w-100"
+                      >
+                        <i class="fas fa-undo me-2"></i>
+                        申请退款
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+
+              <!-- 退款结果 -->
+              <div class="card result-card" id="refundResult">
+                <div class="card-header">
+                  <h5 class="card-title">
+                    <i class="fas fa-check-circle me-2"></i>
+                    退款结果
+                  </h5>
+                </div>
+                <div class="card-body">
+                  <div id="refundContent"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 取消订单页面 -->
+        <div class="page-section" id="cancel">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">
+                <i class="fas fa-times-circle me-2"></i>
+                取消订单
+              </h4>
+            </div>
+            <div class="card-body">
+              <form id="cancelForm">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <label for="cancel_gateway" class="form-label"
+                        >支付网关</label
+                      >
+                      <select
+                        class="form-control"
+                        id="cancel_gateway"
+                        name="channel"
+                        required
+                      >
+                        <option value="alipay">支付宝</option>
+                        <option value="wechat">微信支付</option>
+                        <option value="unipay">银联支付</option>
+                        <option value="douyin">抖音支付</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="mb-3">
+                      <label for="cancel_order_id" class="form-label"
+                        >订单号</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="cancel_order_id"
+                        name="order_id"
+                        placeholder="请输入订单号"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="mb-3">
+                      <label class="form-label">&nbsp;</label>
+                      <button
+                        type="submit"
+                        class="btn btn-danger d-block w-100"
+                      >
+                        <i class="fas fa-times-circle me-2"></i>
+                        取消订单
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+
+              <!-- 取消结果 -->
+              <div class="card result-card" id="cancelResult">
+                <div class="card-header">
+                  <h5 class="card-title">
+                    <i class="fas fa-info-circle me-2"></i>
+                    取消结果
+                  </h5>
+                </div>
+                <div class="card-body">
+                  <div id="cancelContent"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 关闭订单页面 -->
+        <div class="page-section" id="close">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">
+                <i class="fas fa-ban me-2"></i>
+                关闭订单
+              </h4>
+            </div>
+            <div class="card-body">
+              <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i>
+                <strong>关闭订单说明：</strong
+                >关闭订单是指商户主动关闭未支付的订单，关闭后订单无法再进行支付。与取消订单不同，关闭订单通常用于超时或其他业务原因。
+              </div>
+
+              <form id="closeForm">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <label for="close_gateway" class="form-label"
+                        >支付网关</label
+                      >
+                      <select
+                        class="form-control"
+                        id="close_gateway"
+                        name="channel"
+                        required
+                      >
+                        <option value="alipay">支付宝</option>
+                        <option value="wechat">微信支付</option>
+                        <option value="unipay">银联支付</option>
+                        <option value="douyin">抖音支付</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="mb-3">
+                      <label for="close_order_id" class="form-label"
+                        >订单号</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="close_order_id"
+                        name="order_id"
+                        placeholder="请输入订单号"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="mb-3">
+                      <label class="form-label">&nbsp;</label>
+                      <button
+                        type="submit"
+                        class="btn btn-warning d-block w-100"
+                      >
+                        <i class="fas fa-ban me-2"></i>
+                        关闭订单
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+
+              <!-- 关闭结果 -->
+              <div class="card result-card" id="closeResult">
+                <div class="card-header">
+                  <h5 class="card-title">
+                    <i class="fas fa-info-circle me-2"></i>
+                    关闭结果
+                  </h5>
+                </div>
+                <div class="card-body">
+                  <div id="closeContent"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 订单列表页面 -->
+        <div class="page-section" id="orders">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">
+                <i class="fas fa-list me-2"></i>
+                订单列表
+              </h4>
+            </div>
+            <div class="card-body">
+              <div
+                class="d-flex justify-content-between align-items-center mb-3"
+              >
+                <div class="alert alert-info mb-0 flex-grow-1 me-3">
+                  <i class="fas fa-info-circle me-2"></i>
+                  订单列表会自动从服务器获取最新数据
+                </div>
+                <button class="btn btn-primary" onclick="loadOrders()">
+                  <i class="fas fa-sync-alt me-2"></i>
+                  刷新列表
+                </button>
+              </div>
+
+              <div class="table-responsive order-table">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>订单号</th>
+                      <th>商品名称</th>
+                      <th>支付网关</th>
+                      <th>金额</th>
+                      <th>状态</th>
+                      <th>创建时间</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody id="ordersList">
+                    <tr>
+                      <td colspan="7" class="text-center">
+                        <div class="loading me-2"></div>
+                        正在加载订单列表...
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.staticfile.org/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script>
+      // 页面切换功能
+      document.querySelectorAll(".nav-link").forEach((link) => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+
+          // 移除所有活动状态
+          document
+            .querySelectorAll(".nav-link")
+            .forEach((l) => l.classList.remove("active"));
+          document
+            .querySelectorAll(".page-section")
+            .forEach((s) => s.classList.remove("active"));
+
+          // 添加活动状态
+          link.classList.add("active");
+          const sectionId = link.dataset.section;
+          document.getElementById(sectionId).classList.add("active");
+        });
+      });
+
+      // 支付方式标签切换
+      document.querySelectorAll(".payment-tab").forEach((tab) => {
+        tab.addEventListener("click", () => {
+          document
+            .querySelectorAll(".payment-tab")
+            .forEach((t) => t.classList.remove("active"));
+          tab.classList.add("active");
+          document.getElementById("method").value = tab.dataset.tab;
+        });
+      });
+
+      // 支付网关选择
+      document.querySelectorAll(".payment-method").forEach((method) => {
+        method.addEventListener("click", () => {
+          document
+            .querySelectorAll(".payment-method")
+            .forEach((m) => m.classList.remove("active"));
+          method.classList.add("active");
+          const radio = method.querySelector('input[type="radio"]');
+          radio.checked = true;
+        });
+      });
+
+      // 通用的显示加载状态函数
+      function showLoading(button, originalText) {
+        button.disabled = true;
+        button.innerHTML = `<span class="loading me-2"></span>处理中...`;
+        return originalText;
+      }
+
+      function hideLoading(button, originalText) {
+        button.disabled = false;
+        button.innerHTML = originalText;
+      }
+
+      // 通用的显示结果函数
+      function showResult(resultId, content, type = "info") {
+        const resultDiv = document.getElementById(resultId);
+        const resultContent = resultDiv.querySelector('div[id$="Content"]');
+        resultContent.innerHTML = content;
+        resultDiv.style.display = "block";
+      }
+
+      // 创建支付订单
+      document
+        .getElementById("paymentForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const formData = new FormData(e.target);
+          const submitButton = e.target.querySelector('button[type="submit"]');
+          const originalText = submitButton.innerHTML;
+
+          showLoading(submitButton, originalText);
+
+          // 清空上次结果
+          const resultDiv = document.getElementById("result");
+          const resultContent = document.getElementById("resultContent");
+          const qrCodeDiv = document.getElementById("qrCode");
+          resultDiv.style.display = "none";
+          resultContent.innerHTML = "";
+          qrCodeDiv.innerHTML = "";
+
+          try {
+            const response = await fetch("/create_order", {
+              method: "POST",
+              body: formData,
+            });
+
+            const contentType = response.headers.get("content-type");
+
+            if (contentType && contentType.includes("text/html")) {
+              const htmlContent = await response.text();
+              const tempDiv = document.createElement("div");
+              tempDiv.style.display = "none";
+              tempDiv.innerHTML = htmlContent;
+              document.body.appendChild(tempDiv);
+
+              const alipayForm = tempDiv.querySelector("#alipay_payment_form");
+              if (alipayForm) {
+                alipayForm.submit();
+              } else {
+                showResult(
+                  "result",
+                  '<div class="alert alert-danger"><i class="fas fa-exclamation-triangle me-2"></i>处理HTML响应时出错。</div>'
+                );
+              }
+            } else if (
+              contentType &&
+              contentType.includes("application/json")
+            ) {
+              const data = await response.json();
+
+              if (!response.ok) {
+                throw new Error(
+                  data.detail || `HTTP error! status: ${response.status}`
+                );
+              }
+
+              resultDiv.style.display = "block";
+              let resultHtml = `<div class="alert alert-info"><i class="fas fa-info-circle me-2"></i>响应类型: ${data.type}</div>`;
+
+              if (data.type === "qrcode") {
+                qrCodeDiv.innerHTML = "";
+                new QRCode(qrCodeDiv, {
+                  text: data.code_url,
+                  width: 256,
+                  height: 256,
+                  colorDark: "#000000",
+                  colorLight: "#ffffff",
+                  correctLevel: QRCode.CorrectLevel.H,
+                });
+                resultHtml += `<p class="text-center"><i class="fas fa-qrcode me-2"></i>请扫描二维码完成支付</p>`;
+              } else if (data.type === "redirect") {
+                resultHtml += `<p><i class="fas fa-external-link-alt me-2"></i>即将跳转到支付页面...</p><p><a href="${data.url}" target="_blank" class="btn btn-primary">如果未跳转，请点击这里</a></p>`;
+                window.location.href = data.url;
+              } else if (data.type === "app_params") {
+                resultHtml += `<p><i class="fas fa-mobile-alt me-2"></i>请在APP中使用以下参数完成支付:</p><pre class="bg-light p-3 rounded">${JSON.stringify(
+                  data.data,
+                  null,
+                  2
+                )}</pre>`;
+              } else if (data.type === "mini_params") {
+                resultHtml += `<p><i class="fas fa-mobile-alt me-2"></i>请在小程序中使用以下参数完成支付:</p><pre class="bg-light p-3 rounded">${JSON.stringify(
+                  data.data,
+                  null,
+                  2
+                )}</pre>`;
+              } else if (data.type === "html") {
+                resultHtml += `<p><i class="fas fa-external-link-alt me-2"></i>请在新窗口中完成支付</p>`;
+                const newWindow = window.open("", "_blank");
+                newWindow.document.write(data.html);
+                newWindow.document.close();
+              }
+
+              resultContent.innerHTML = resultHtml;
+            } else {
+              const textResponse = await response.text();
+              showResult(
+                "result",
+                `<div class="alert alert-danger"><i class="fas fa-exclamation-triangle me-2"></i>收到非预期的响应类型 (${
+                  contentType || "无Content-Type"
+                })。内容: ${textResponse}</div>`
+              );
+            }
+          } catch (error) {
+            console.error("Fetch error:", error);
+            showResult(
+              "result",
+              `<div class="alert alert-danger"><i class="fas fa-exclamation-triangle me-2"></i>请求失败: ${error.message}</div>`
+            );
+          } finally {
+            hideLoading(submitButton, originalText);
+          }
+        });
+
+      // 查询订单
+      document
+        .getElementById("queryForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const formData = new FormData(e.target);
+          const gateway = formData.get("channel");
+          const orderId = formData.get("order_id");
+          const submitButton = e.target.querySelector('button[type="submit"]');
+          const originalText = submitButton.innerHTML;
+
+          showLoading(submitButton, originalText);
+
+          try {
+            const response = await fetch(`/query/${gateway}/${orderId}`);
+            const data = await response.json();
+
+            if (data.success) {
+              const orderData = data.data;
+              let statusBadge = "";
+
+              const paymentStatus = orderData.status;
+
+              if (paymentStatus === "success") {
+                statusBadge =
+                  '<span class="status-badge status-success">支付成功</span>';
+              } else if (paymentStatus === "pending") {
+                statusBadge =
+                  '<span class="status-badge status-pending">待支付</span>';
+              } else if (paymentStatus === "failed") {
+                statusBadge =
+                  '<span class="status-badge status-failed">支付失败</span>';
+              } else if (paymentStatus === "cancelled") {
+                statusBadge =
+                  '<span class="status-badge status-cancelled">已取消</span>';
+              } else if (paymentStatus === "closed") {
+                statusBadge =
+                  '<span class="status-badge status-closed">已关闭</span>';
+              } else {
+                statusBadge =
+                  '<span class="status-badge status-unknown">未知状态' +
+                  paymentStatus +
+                  "</span>";
+              }
+
+              const resultHtml = `
+              <div class="alert alert-success">
+                <i class="fas fa-check-circle me-2"></i>查询成功
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <p><strong>订单号:</strong> ${
+                    orderData.out_trade_no || orderId
+                  }</p>
+                  <p><strong>交易号:</strong> ${
+                    orderData.trade_no || "暂无"
+                  }</p>
+                  <p><strong>订单金额:</strong> ¥${
+                    orderData.total_amount || orderData.amount || "未知"
+                  }</p>
+                  <p><strong>实付金额:</strong> ¥${
+                    orderData.paid_amount || orderData.total_amount || "未知"
+                  }</p>
+                </div>
+                <div class="col-md-6">
+                  <p><strong>支付状态:</strong> ${statusBadge}</p>
+                  <p><strong>支付时间:</strong> ${
+                    orderData.pay_time || orderData.send_pay_date || "未支付"
+                  }</p>
+                  <p><strong>买家账号:</strong> ${
+                    orderData.buyer_logon_id || "未知"
+                  }</p>
+                </div>
+              </div>
+            `;
+              showResult("queryResult", resultHtml);
+            } else {
+              showResult(
+                "queryResult",
+                `<div class="alert alert-warning"><i class="fas fa-exclamation-triangle me-2"></i>${
+                  data.message || "查询失败"
+                }</div>`
+              );
+            }
+          } catch (error) {
+            console.error("Query error:", error);
+            showResult(
+              "queryResult",
+              `<div class="alert alert-danger"><i class="fas fa-exclamation-triangle me-2"></i>查询失败: ${error.message}</div>`
+            );
+          } finally {
+            hideLoading(submitButton, originalText);
+          }
+        });
+
+      // 申请退款
+      document
+        .getElementById("refundForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const formData = new FormData(e.target);
+          const gateway = formData.get("channel");
+          const orderId = formData.get("order_id");
+          const amount = formData.get("amount");
+          const submitButton = e.target.querySelector('button[type="submit"]');
+          const originalText = submitButton.innerHTML;
+
+          showLoading(submitButton, originalText);
+
+          try {
+            const response = await fetch(
+              `/refund/${gateway}/${orderId}?amount=${amount}`
+            );
+            const data = await response.json();
+
+            if (data.success) {
+              const resultHtml = `
+              <div class="alert alert-success">
+                <i class="fas fa-check-circle me-2"></i>退款申请成功
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <p><strong>订单号:</strong> ${orderId}</p>
+                  <p><strong>退款金额:</strong> ¥${amount}</p>
+                </div>
+                <div class="col-md-6">
+                  <p><strong>退款单号:</strong> ${
+                    data.data.out_refund_no || "系统生成"
+                  }</p>
+                  <p><strong>状态:</strong> <span class="status-badge status-success">退款成功</span></p>
+                </div>
+              </div>
+            `;
+              showResult("refundResult", resultHtml);
+            } else {
+              showResult(
+                "refundResult",
+                `<div class="alert alert-warning"><i class="fas fa-exclamation-triangle me-2"></i>${
+                  data.message || "退款失败"
+                }</div>`
+              );
+            }
+          } catch (error) {
+            console.error("Refund error:", error);
+            showResult(
+              "refundResult",
+              `<div class="alert alert-danger"><i class="fas fa-exclamation-triangle me-2"></i>退款失败: ${error.message}</div>`
+            );
+          } finally {
+            hideLoading(submitButton, originalText);
+          }
+        });
+
+      // 取消订单
+      document
+        .getElementById("cancelForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const formData = new FormData(e.target);
+          const gateway = formData.get("channel");
+          const orderId = formData.get("order_id");
+          const submitButton = e.target.querySelector('button[type="submit"]');
+          const originalText = submitButton.innerHTML;
+
+          showLoading(submitButton, originalText);
+
+          try {
+            const response = await fetch(`/cancel/${gateway}/${orderId}`);
+            const data = await response.json();
+
+            if (data.success) {
+              const resultHtml = `
+              <div class="alert alert-success">
+                <i class="fas fa-check-circle me-2"></i>订单取消成功
+              </div>
+              <p><strong>订单号:</strong> ${orderId}</p>
+              <p><strong>状态:</strong> <span class="status-badge status-failed">已取消</span></p>
+            `;
+              showResult("cancelResult", resultHtml);
+            } else {
+              showResult(
+                "cancelResult",
+                `<div class="alert alert-warning"><i class="fas fa-exclamation-triangle me-2"></i>${
+                  data.message || "取消失败"
+                }</div>`
+              );
+            }
+          } catch (error) {
+            console.error("Cancel error:", error);
+            showResult(
+              "cancelResult",
+              `<div class="alert alert-danger"><i class="fas fa-exclamation-triangle me-2"></i>取消失败: ${error.message}</div>`
+            );
+          } finally {
+            hideLoading(submitButton, originalText);
+          }
+        });
+
+      // 关闭订单
+      document
+        .getElementById("closeForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const formData = new FormData(e.target);
+          const gateway = formData.get("channel");
+          const orderId = formData.get("order_id");
+          const submitButton = e.target.querySelector('button[type="submit"]');
+          const originalText = submitButton.innerHTML;
+
+          showLoading(submitButton, originalText);
+
+          try {
+            const response = await fetch(`/close/${gateway}/${orderId}`);
+            const data = await response.json();
+
+            if (data.success) {
+              const resultHtml = `
+              <div class="alert alert-success">
+                <i class="fas fa-check-circle me-2"></i>订单关闭成功
+              </div>
+              <p><strong>订单号:</strong> ${orderId}</p>
+              <p><strong>状态:</strong> <span class="status-badge status-closed">已关闭</span></p>
+              <div class="alert alert-info mt-3">
+                <i class="fas fa-info-circle me-2"></i>
+                订单已成功关闭，该订单无法再进行支付操作。
+              </div>
+            `;
+              showResult("closeResult", resultHtml);
+            } else {
+              showResult(
+                "closeResult",
+                `<div class="alert alert-warning"><i class="fas fa-exclamation-triangle me-2"></i>${
+                  data.message || "关闭失败"
+                }</div>`
+              );
+            }
+          } catch (error) {
+            console.error("Close error:", error);
+            showResult(
+              "closeResult",
+              `<div class="alert alert-danger"><i class="fas fa-exclamation-triangle me-2"></i>关闭失败: ${error.message}</div>`
+            );
+          } finally {
+            hideLoading(submitButton, originalText);
+          }
+        });
+
+      // 订单列表操作函数
+      function queryOrderById(gateway, orderId) {
+        // 切换到查询页面
+        document
+          .querySelectorAll(".nav-link")
+          .forEach((l) => l.classList.remove("active"));
+        document
+          .querySelectorAll(".page-section")
+          .forEach((s) => s.classList.remove("active"));
+        document
+          .querySelector('[data-section="query"]')
+          .classList.add("active");
+        document.getElementById("query").classList.add("active");
+
+        // 填充表单
+        document.getElementById("query_gateway").value = gateway;
+        document.getElementById("query_order_id").value = orderId;
+      }
+
+      function refundOrderById(gateway, orderId, amount) {
+        // 切换到退款页面
+        document
+          .querySelectorAll(".nav-link")
+          .forEach((l) => l.classList.remove("active"));
+        document
+          .querySelectorAll(".page-section")
+          .forEach((s) => s.classList.remove("active"));
+        document
+          .querySelector('[data-section="refund"]')
+          .classList.add("active");
+        document.getElementById("refund").classList.add("active");
+
+        // 填充表单
+        document.getElementById("refund_gateway").value = gateway;
+        document.getElementById("refund_order_id").value = orderId;
+        document.getElementById("refund_amount").value = amount;
+      }
+
+      function cancelOrderById(gateway, orderId) {
+        // 切换到取消页面
+        document
+          .querySelectorAll(".nav-link")
+          .forEach((l) => l.classList.remove("active"));
+        document
+          .querySelectorAll(".page-section")
+          .forEach((s) => s.classList.remove("active"));
+        document
+          .querySelector('[data-section="cancel"]')
+          .classList.add("active");
+        document.getElementById("cancel").classList.add("active");
+
+        // 填充表单
+        document.getElementById("cancel_gateway").value = gateway;
+        document.getElementById("cancel_order_id").value = orderId;
+      }
+
+      function closeOrderById(gateway, orderId) {
+        // 切换到关闭页面
+        document
+          .querySelectorAll(".nav-link")
+          .forEach((l) => l.classList.remove("active"));
+        document
+          .querySelectorAll(".page-section")
+          .forEach((s) => s.classList.remove("active"));
+        document
+          .querySelector('[data-section="close"]')
+          .classList.add("active");
+        document.getElementById("close").classList.add("active");
+
+        // 填充表单
+        document.getElementById("close_gateway").value = gateway;
+        document.getElementById("close_order_id").value = orderId;
+      }
+
+      // 加载订单列表
+      async function loadOrders() {
+        const ordersList = document.getElementById("ordersList");
+
+        try {
+          // 显示加载状态
+          ordersList.innerHTML = `
+            <tr>
+              <td colspan="7" class="text-center">
+                <div class="loading me-2"></div>
+                正在加载订单列表...
+              </td>
+            </tr>
+          `;
+
+          const response = await fetch("/orders");
+          const result = await response.json();
+
+          if (result.success && result.data) {
+            if (result.data.length === 0) {
+              ordersList.innerHTML = `
+                <tr>
+                  <td colspan="7" class="text-center text-muted">
+                    <i class="fas fa-inbox me-2"></i>
+                    暂无订单数据
+                  </td>
+                </tr>
+              `;
+            } else {
+              ordersList.innerHTML = result.data
+                .map((order) => {
+                  const statusClass = getStatusClass(order.status);
+                  const actionButtons = getActionButtons(order);
+
+                  return `
+                  <tr>
+                    <td><code>${order.order_id}</code></td>
+                    <td>${order.subject || "-"}</td>
+                    <td><span class="badge bg-secondary">${
+                      order.gateway_name
+                    }</span></td>
+                    <td><strong>¥${order.amount.toFixed(2)}</strong></td>
+                    <td><span class="status-badge ${statusClass}">${
+                    order.status_name
+                  }</span></td>
+                    <td><small class="text-muted">${
+                      order.create_time
+                    }</small></td>
+                    <td>${actionButtons}</td>
+                  </tr>
+                `;
+                })
+                .join("");
+            }
+          } else {
+            ordersList.innerHTML = `
+              <tr>
+                <td colspan="7" class="text-center text-danger">
+                  <i class="fas fa-exclamation-triangle me-2"></i>
+                  ${result.message || "加载订单列表失败"}
+                </td>
+              </tr>
+            `;
+          }
+        } catch (error) {
+          console.error("加载订单列表失败:", error);
+          ordersList.innerHTML = `
+            <tr>
+              <td colspan="7" class="text-center text-danger">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                网络错误，请稍后重试
+              </td>
+            </tr>
+          `;
+        }
+      }
+
+      // 获取状态样式类
+      function getStatusClass(status) {
+        switch (status) {
+          case "success":
+          case "paid":
+            return "status-success";
+          case "pending":
+            return "status-pending";
+          case "failed":
+            return "status-danger";
+          case "refunded":
+            return "status-warning";
+          case "cancelled":
+            return "status-secondary";
+          case "closed":
+            return "status-closed";
+          default:
+            return "status-secondary";
+        }
+      }
+
+      // 获取操作按钮
+      function getActionButtons(order) {
+        let buttons = [];
+
+        // 查询按钮（所有状态都可以查询）
+        buttons.push(`
+          <button class="btn btn-sm btn-outline-primary me-1" onclick="queryOrderById('${order.gateway}', '${order.order_id}')" title="查询订单">
+            <i class="fas fa-search"></i>
+          </button>
+        `);
+
+        // 根据订单状态显示不同的操作按钮
+        if (order.status === "success" || order.status === "paid") {
+          // 已支付的订单可以退款
+          buttons.push(`
+            <button class="btn btn-sm btn-outline-warning" onclick="refundOrderById('${order.gateway}', '${order.order_id}', ${order.amount})" title="申请退款">
+              <i class="fas fa-undo"></i>
+            </button>
+          `);
+        } else if (order.status === "pending") {
+          // 待支付的订单可以取消或关闭
+          buttons.push(`
+            <button class="btn btn-sm btn-outline-danger me-1" onclick="cancelOrderById('${order.gateway}', '${order.order_id}')" title="取消订单">
+              <i class="fas fa-times"></i>
+            </button>
+          `);
+          buttons.push(`
+            <button class="btn btn-sm btn-outline-warning" onclick="closeOrderById('${order.gateway}', '${order.order_id}')" title="关闭订单">
+              <i class="fas fa-ban"></i>
+            </button>
+          `);
+        }
+
+        return buttons.join("");
+      }
+
+      // 页面加载完成后自动加载订单列表
+      document.addEventListener("DOMContentLoaded", function () {
+        // 延迟加载订单列表，避免与其他初始化冲突
+        setTimeout(loadOrders, 500);
+      });
+    </script>
+  </body>
+</html>

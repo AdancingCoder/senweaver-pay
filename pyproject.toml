@@ -1,0 +1,66 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "senweaver-pay"
+version = "0.1.0"
+description = "Payment SDK for Alipay, WeChat Pay, Douyin Pay and UnionPay"
+readme = "README.md"
+authors = [
+    {name = "SenWeaver", email = "support@senweaver.com"}
+]
+license = {text = "MIT"}
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Office/Business :: Financial",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "requests>=2.25.0",
+    "cryptography>=36.0.0"
+]
+
+[project.urls]
+Homepage = "https://github.com/senweaver/senweaver-pay"
+"Bug Tracker" = "https://github.com/senweaver/senweaver-pay/issues"
+
+[tool.setuptools]
+packages = [
+    "senweaver_pay", 
+    "senweaver_pay.channels",
+    "senweaver_pay.channels.alipay", 
+    "senweaver_pay.channels.wechat", 
+    "senweaver_pay.channels.douyin", 
+    "senweaver_pay.channels.unipay"
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py37"
+select = ["E", "F", "B", "I"]
+ignore = ["E501"]
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[tool.ruff.isort]
+known-first-party = ["senweaver_pay"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+] 

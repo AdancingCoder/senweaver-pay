@@ -1,0 +1,34 @@
+# Ruff configuration for senweaver-pay project
+line-length = 120
+target-version = "py38"
+
+[lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # Pyflakes
+    "I",    # isort
+]
+
+ignore = [
+    "E501",   # line too long (handled by line-length)
+    "E203",   # whitespace before ':'
+    "E402",   # module level import not at top of file
+    "F841",   # local variable is assigned to but never used
+]
+
+exclude = [
+    ".git",
+    ".venv",
+    "venv",
+    "__pycache__",
+    "build",
+    "dist",
+    "*.egg-info",
+]
+
+[lint.per-file-ignores]
+"__init__.py" = ["F401"]
+"test_*.py" = ["F401", "E721"]  # 测试文件允许未使用的导入和类型比较
+"**/test_*.py" = ["F401", "E721"]  # 所有测试文件
+"tests/*.py" = ["F401", "E712", "E721"]  # 测试目录
