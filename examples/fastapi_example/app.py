@@ -62,7 +62,7 @@ pay_config = {
     "alipay": {
         "default": {
             "app_id": os.getenv("ALIPAY_APP_ID", "2016********"),
-            "app_secret_cert": os.getenv("ALIPAY_APP_SECRET_CERT", "").replace("\\n", "\n"),
+            "app_secret_cert": os.getenv("ALIPAY_APP_SECRET_CERT") or os.path.join(current_dir, "certs/alipay/private_key.pem"),
             "app_public_cert_path": os.getenv(
                 "ALIPAY_APP_PUBLIC_CERT_PATH", os.path.join(current_dir, "certs/alipay/appCertPublicKey.crt")
             ),
